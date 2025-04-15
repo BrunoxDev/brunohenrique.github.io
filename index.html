@@ -1,21 +1,209 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Bruno Henrique | Professor de TI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruno Henrique | Professor de TI</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 1rem;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .projects-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            width: 30%;
+            box-sizing: border-box;
+        }
+
+        .project-card h3 {
+            margin-top: 0;
+        }
+
+        .project-card a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .project-card a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .project-card {
+                width: 100%;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <h1>Bem-vindo ao meu site!</h1>
-  <p>Sou professor de Tecnologia da Informação e desenvolvedor de projetos em Arduino, Unity e Python.</p>
 
-  <h2>Projetos</h2>
-  <ul>
-    <li><a href="https://github.com/seuuser/arduino-projetos">Projetos com Arduino</a></li>
-    <li><a href="https://github.com/seuuser/unity-jogos">Jogos na Unity</a></li>
-  </ul>
+    <!-- Header -->
+    <header>
+        <h1>Bruno Henrique</h1>
+        <p>Professor de Tecnologia da Informação | Desenvolvedor | Mentor</p>
+    </header>
 
-  <h2>Seção para Alunos</h2>
-  <p>Acesse os materiais <a href="/aulas">clicando aqui</a>.</p>
+    <!-- Navigation -->
+    <nav>
+        <a href="#sobre">Sobre Mim</a>
+        <a href="#projetos-pessoais">Projetos Pessoais</a>
+        <a href="#projetos-alunos">Projetos para Alunos</a>
+        <a href="#contato">Contato</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <!-- Sobre Mim Section -->
+        <div id="sobre" class="section">
+            <h2>Sobre Mim</h2>
+            <p>Olá! Eu sou o Bruno Henrique, professor de TI e desenvolvedor de projetos em Arduino, Unity e Python.
+                Sou apaixonado por educação e sempre busco aprimorar meus conhecimentos para transmitir isso aos meus
+                alunos de forma prática e divertida. Tenho experiência em ensino fundamental, médio e superior, e minha
+                missão é capacitar os alunos com habilidades tecnológicas para o futuro.</p>
+        </div>
+
+        <!-- Projetos Pessoais Section -->
+        <div id="projetos-pessoais" class="section">
+            <h2>Projetos Pessoais</h2>
+            <p>Esses são alguns dos meus projetos pessoais que desenvolvo com a intenção de aprender mais e contribuir com
+                a comunidade. Confira abaixo:</p>
+            <div class="projects-list">
+                <div class="project-card">
+                    <h3>Arduino: Medidor de Umidade do Solo</h3>
+                    <p>Um projeto que utiliza o Arduino para medir a umidade do solo, com base em sensores e comunicação via
+                        serial.</p>
+                    <a href="https://github.com/seuuser/arduino-projetos" target="_blank">Ver Projeto</a>
+                </div>
+                <div class="project-card">
+                    <h3>Unity: Jogo de Aventura 3D</h3>
+                    <p>Um jogo 3D desenvolvido na Unity onde o objetivo é derrotar um dragão gigante. A mecânica envolve
+                        capoeira!</p>
+                    <a href="https://github.com/seuuser/unity-jogos" target="_blank">Ver Projeto</a>
+                </div>
+                <div class="project-card">
+                    <h3>Python: Automação de Tarefas</h3>
+                    <p>Automatizei diversas tarefas do dia a dia com scripts em Python, como envio de emails e manipulação
+                        de arquivos.</p>
+                    <a href="https://github.com/seuuser/python-automacoes" target="_blank">Ver Projeto</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projetos para Alunos Section -->
+        <div id="projetos-alunos" class="section">
+            <h2>Projetos para Alunos</h2>
+            <p>Esses são os projetos que desenvolvo para as aulas e atividades dos meus alunos. Aqui, você pode acompanhar
+                os projetos que estou ensinando ou que já foram realizados pelos alunos:</p>
+            <div class="projects-list">
+                <div class="project-card">
+                    <h3>Tamagotchi com Micro:Bit</h3>
+                    <p>Projeto desenvolvido no site MakeCode com o objetivo de ensinar programação básica de forma divertida e
+                        interativa.</p>
+                    <a href="https://github.com/seuuser/tamagotchi-microbit" target="_blank">Ver Projeto</a>
+                </div>
+                <div class="project-card">
+                    <h3>Medidor de Umidade para o Sertão</h3>
+                    <p>Projeto com Arduino e sensores de umidade do solo, visando ensinar robótica e eletrônica aplicada ao
+                        meio ambiente.</p>
+                    <a href="https://github.com/seuuser/arduino-umidade" target="_blank">Ver Projeto</a>
+                </div>
+                <div class="project-card">
+                    <h3>Jogo Educacional no Scratch</h3>
+                    <p>Um jogo simples feito no Scratch para alunos do ensino fundamental, abordando conceitos de programação
+                        e lógica.</p>
+                    <a href="https://github.com/seuuser/jogo-scratch" target="_blank">Ver Projeto</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contato Section -->
+        <div id="contato" class="section">
+            <h2>Contato</h2>
+            <p>Entre em contato para dúvidas, sugestões ou novos projetos:</p>
+            <ul>
+                <li>Email: <a href="mailto:brunosilva11001100@gmail.com">brunosilva11001100@gmail.com</a></li>
+                <li>LinkedIn: <a href="https://linkedin.com/in/bruno-ha9a734142" target="_blank">linkedin.com/in/bruno-ha9a734142</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Bruno Henrique | Todos os direitos reservados</p>
+    </footer>
+
 </body>
+
 </html>
