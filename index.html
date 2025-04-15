@@ -6,101 +6,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bruno Henrique | Professor de TI</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
             color: #333;
         }
 
         header {
-            background-color: #333;
+            background-color: #2C3E50;
             color: #fff;
-            padding: 1rem;
+            padding: 2rem 0;
             text-align: center;
         }
 
         header h1 {
-            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
         }
 
         nav {
-            background-color: #444;
-            padding: 1rem;
+            background-color: #34495E;
+            color: #fff;
             display: flex;
             justify-content: center;
+            padding: 1rem;
         }
 
         nav a {
             color: #fff;
-            margin: 0 1rem;
+            margin: 0 2rem;
             text-decoration: none;
             font-size: 1.1rem;
+            transition: color 0.3s ease;
         }
 
         nav a:hover {
-            text-decoration: underline;
+            color: #1abc9c;
         }
 
         .container {
-            padding: 2rem;
+            width: 90%;
+            max-width: 1200px;
+            margin: 3rem auto;
         }
 
         .section {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .section h2 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 0.5rem;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #2C3E50;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: #2980b9;
             margin-bottom: 1rem;
         }
 
-        .projects-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
+        .card p {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
         }
 
-        .project-card {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 1rem;
-            width: 30%;
-            box-sizing: border-box;
-        }
-
-        .project-card h3 {
-            margin-top: 0;
-        }
-
-        .project-card a {
+        .card a {
+            display: inline-block;
+            background-color: #1abc9c;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
             text-decoration: none;
-            color: #333;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
         }
 
-        .project-card a:hover {
-            text-decoration: underline;
+        .card a:hover {
+            background-color: #16a085;
         }
 
         footer {
-            background-color: #333;
+            background-color: #2C3E50;
             color: #fff;
             padding: 1rem;
             text-align: center;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            font-size: 1rem;
         }
 
         @media (max-width: 768px) {
-            .project-card {
+            .container {
                 width: 100%;
+                padding: 0 1rem;
             }
 
-            nav {
-                flex-direction: column;
+            nav a {
+                margin: 0 1rem;
             }
         }
     </style>
@@ -117,86 +145,74 @@
     <!-- Navigation -->
     <nav>
         <a href="#sobre">Sobre Mim</a>
-        <a href="#projetos-pessoais">Projetos Pessoais</a>
-        <a href="#projetos-alunos">Projetos para Alunos</a>
+        <a href="#projetos">Projetos para Alunos</a>
+        <a href="#materiais">Materiais de Apoio</a>
         <a href="#contato">Contato</a>
     </nav>
 
     <!-- Main Content -->
     <div class="container">
-        
+
         <!-- Sobre Mim Section -->
         <div id="sobre" class="section">
             <h2>Sobre Mim</h2>
-            <p>Olá! Eu sou o Bruno Henrique, professor de TI e desenvolvedor de projetos em Arduino, Unity e Python.
-                Sou apaixonado por educação e sempre busco aprimorar meus conhecimentos para transmitir isso aos meus
-                alunos de forma prática e divertida. Tenho experiência em ensino fundamental, médio e superior, e minha
-                missão é capacitar os alunos com habilidades tecnológicas para o futuro.</p>
-        </div>
-
-        <!-- Projetos Pessoais Section -->
-        <div id="projetos-pessoais" class="section">
-            <h2>Projetos Pessoais</h2>
-            <p>Esses são alguns dos meus projetos pessoais que desenvolvo com a intenção de aprender mais e contribuir com
-                a comunidade. Confira abaixo:</p>
-            <div class="projects-list">
-                <div class="project-card">
-                    <h3>Arduino: Medidor de Umidade do Solo</h3>
-                    <p>Um projeto que utiliza o Arduino para medir a umidade do solo, com base em sensores e comunicação via
-                        serial.</p>
-                    <a href="https://github.com/seuuser/arduino-projetos" target="_blank">Ver Projeto</a>
-                </div>
-                <div class="project-card">
-                    <h3>Unity: Jogo de Aventura 3D</h3>
-                    <p>Um jogo 3D desenvolvido na Unity onde o objetivo é derrotar um dragão gigante. A mecânica envolve
-                        capoeira!</p>
-                    <a href="https://github.com/seuuser/unity-jogos" target="_blank">Ver Projeto</a>
-                </div>
-                <div class="project-card">
-                    <h3>Python: Automação de Tarefas</h3>
-                    <p>Automatizei diversas tarefas do dia a dia com scripts em Python, como envio de emails e manipulação
-                        de arquivos.</p>
-                    <a href="https://github.com/seuuser/python-automacoes" target="_blank">Ver Projeto</a>
-                </div>
+            <div class="card">
+                <p>Olá! Eu sou o Bruno Henrique, um apaixonado por ensinar tecnologia, programação e robótica. Com experiência em diferentes níveis de ensino, busco capacitar meus alunos para o mercado de trabalho e estimular a criatividade no desenvolvimento de projetos.</p>
             </div>
         </div>
 
         <!-- Projetos para Alunos Section -->
-        <div id="projetos-alunos" class="section">
+        <div id="projetos" class="section">
             <h2>Projetos para Alunos</h2>
-            <p>Esses são os projetos que desenvolvo para as aulas e atividades dos meus alunos. Aqui, você pode acompanhar
-                os projetos que estou ensinando ou que já foram realizados pelos alunos:</p>
-            <div class="projects-list">
-                <div class="project-card">
-                    <h3>Tamagotchi com Micro:Bit</h3>
-                    <p>Projeto desenvolvido no site MakeCode com o objetivo de ensinar programação básica de forma divertida e
-                        interativa.</p>
-                    <a href="https://github.com/seuuser/tamagotchi-microbit" target="_blank">Ver Projeto</a>
-                </div>
-                <div class="project-card">
-                    <h3>Medidor de Umidade para o Sertão</h3>
-                    <p>Projeto com Arduino e sensores de umidade do solo, visando ensinar robótica e eletrônica aplicada ao
-                        meio ambiente.</p>
-                    <a href="https://github.com/seuuser/arduino-umidade" target="_blank">Ver Projeto</a>
-                </div>
-                <div class="project-card">
-                    <h3>Jogo Educacional no Scratch</h3>
-                    <p>Um jogo simples feito no Scratch para alunos do ensino fundamental, abordando conceitos de programação
-                        e lógica.</p>
-                    <a href="https://github.com/seuuser/jogo-scratch" target="_blank">Ver Projeto</a>
-                </div>
+            <div class="card">
+                <h3>Projeto 1: Introdução ao Arduino</h3>
+                <p>Este projeto é destinado aos alunos do Ensino Fundamental e Médio. Vamos aprender como programar o Arduino para criar projetos simples e interativos.</p>
+                <a href="https://github.com/seuuser/arduino-introducao" target="_blank">Ver Projeto</a>
+            </div>
+            <div class="card">
+                <h3>Projeto 2: Robótica com Micro:bit</h3>
+                <p>Aprenda a programar e montar robôs usando o micro:bit. Este projeto inclui a construção de robôs para realizar tarefas básicas e também atividades interativas.</p>
+                <a href="https://github.com/seuuser/robotica-microbit" target="_blank">Ver Projeto</a>
+            </div>
+            <div class="card">
+                <h3>Projeto 3: Criação de Jogos com Unity</h3>
+                <p>Desenvolva seus primeiros jogos 2D e 3D com Unity. Aprenda a programar interações, personagens e animações!</p>
+                <a href="https://github.com/seuuser/unity-jogos" target="_blank">Ver Projeto</a>
+            </div>
+        </div>
+
+        <!-- Materiais de Apoio Section -->
+        <div id="materiais" class="section">
+            <h2>Materiais de Apoio</h2>
+            <div class="card">
+                <h3>Guia de Programação em Python</h3>
+                <p>Este material é voltado para quem quer aprender programação com Python, abrangendo desde o básico até conceitos mais avançados.</p>
+                <a href="https://linkdoprotapython.com" target="_blank">Acessar Material</a>
+            </div>
+            <div class="card">
+                <h3>Introdução ao Desenvolvimento de Games com Unity</h3>
+                <p>Aprenda os conceitos fundamentais do desenvolvimento de jogos, desde a criação de personagens até a implementação de física no Unity.</p>
+                <a href="https://linkdoprotunity.com" target="_blank">Acessar Material</a>
+            </div>
+            <div class="card">
+                <h3>Arduino para Iniciantes</h3>
+                <p>Esse guia ensina como começar a trabalhar com o Arduino, abordando desde a instalação até a criação de circuitos simples.</p>
+                <a href="https://linkdoarduino.com" target="_blank">Acessar Material</a>
             </div>
         </div>
 
         <!-- Contato Section -->
         <div id="contato" class="section">
             <h2>Contato</h2>
-            <p>Entre em contato para dúvidas, sugestões ou novos projetos:</p>
-            <ul>
-                <li>Email: <a href="mailto:brunosilva11001100@gmail.com">brunosilva11001100@gmail.com</a></li>
-                <li>LinkedIn: <a href="https://linkedin.com/in/bruno-ha9a734142" target="_blank">linkedin.com/in/bruno-ha9a734142</a></li>
-            </ul>
+            <div class="card">
+                <p>Entre em contato para dúvidas, sugestões ou novos projetos:</p>
+                <ul>
+                    <li>Email: <a href="mailto:brunosilva11001100@gmail.com">brunosilva11001100@gmail.com</a></li>
+                    <li>LinkedIn: <a href="https://linkedin.com/in/bruno-ha9a734142" target="_blank">linkedin.com/in/bruno-ha9a734142</a></li>
+                </ul>
+            </div>
         </div>
+
     </div>
 
     <!-- Footer -->
