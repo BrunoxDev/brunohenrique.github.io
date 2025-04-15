@@ -1,0 +1,21 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Bruno Henrique | Professor de TI</title>
+</head>
+<body>
+  <h1>Bem-vindo ao meu site!</h1>
+  <p>Sou professor de Tecnologia da Informação e desenvolvedor de projetos em Arduino, Unity e Python.</p>
+
+  <h2>Projetos</h2>
+  <ul>
+    <li><a href="https://github.com/seuuser/arduino-projetos">Projetos com Arduino</a></li>
+    <li><a href="https://github.com/seuuser/unity-jogos">Jogos na Unity</a></li>
+  </ul>
+
+  <h2>Seção para Alunos</h2>
+  <p>Acesse os materiais <a href="/aulas">clicando aqui</a>.</p>
+</body>
+</html>
