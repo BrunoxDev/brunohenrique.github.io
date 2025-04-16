@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal Geek do Professor Bruno</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <style>
     * {
       margin: 0;
@@ -106,8 +103,6 @@
 <body>
   <header>
     <h1>Portal Geek do Professor Bruno</h1>
-    <button onclick="login()" id="loginBtn">Login</button>
-    <button onclick="logout()" id="logoutBtn" style="display:none">Logout</button>
   </header>
 
   <nav>
@@ -139,33 +134,18 @@
         <h3>Informações do Projeto</h3>
         <textarea id="editor" rows="6" style="width:100%;"></textarea>
         <br>
-        <button onclick="salvarProjeto()" id="saveBtn">Salvar</button>
+        <button onclick="salvarProjeto()">Salvar</button>
       </div>
     </section>
   </div>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "SUA_API_KEY",
-      authDomain: "SEU_DOMINIO.firebaseapp.com",
-      projectId: "SEU_PROJECT_ID",
-      storageBucket: "SEU_BUCKET.appspot.com",
-      messagingSenderId: "SEU_ID",
-      appId: "SUA_APP_ID"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
     const turmasPorInstituicao = {
       'CLIP': ['6° ano', '7° ano', '8° ano', '9° ano'],
       'Continental': ['Pré I', 'Pré II', '1° ano', '2° ano', '3° ano', '4° ano', '5° ano', '6° ano', '7° ano', '8° ano', '9° ano'],
       'Alfredo': ['1° ano', '2° ano', '3° ano', '4° ano', '5° ano', '6° ano', '7° ano', '8° ano', '9° ano'],
       'Happy': ['Arduino', 'Microbit', 'Games JR.', 'Games 2D', 'Games 3D', 'Apps com Python', 'Cientistas Digitais']
     };
-
-    let user = null;
 
     function atualizarTurmas() {
       const instituicao = document.getElementById("instituicao").value;
@@ -182,55 +162,30 @@
       }
     }
 
-    async function mostrarProjeto() {
+    function mostrarProjeto() {
       const instituicao = document.getElementById("instituicao").value;
       const turma = document.getElementById("turma").value;
       const editor = document.getElementById("editor");
 
       if (instituicao && turma) {
         const chave = `${instituicao}_${turma}`;
-        const doc = await db.collection("projetos").doc(chave).get();
-        editor.value = doc.exists ? doc.data().texto : "";
+        const conteudo = localStorage.getItem(chave) || '';
+        editor.value = conteudo;
         document.getElementById("projetoContent").style.display = "block";
-        document.getElementById("editor").disabled = !user;
-        document.getElementById("saveBtn").style.display = user ? 'inline' : 'none';
       }
     }
 
-    async function salvarProjeto() {
-      if (!user) return;
+    function salvarProjeto() {
       const instituicao = document.getElementById("instituicao").value;
       const turma = document.getElementById("turma").value;
-      const texto = document.getElementById("editor").value;
-      const chave = `${instituicao}_${turma}`;
-      await db.collection("projetos").doc(chave).set({ texto });
-      alert("Projeto salvo com sucesso!");
-    }
+      const conteudo = document.getElementById("editor").value;
 
-    function login() {
-      const email = prompt("Digite seu e-mail:");
-      const senha = prompt("Digite sua senha:");
-      auth.signInWithEmailAndPassword(email, senha).then(cred => {
-        user = cred.user;
-        document.getElementById("loginBtn").style.display = "none";
-        document.getElementById("logoutBtn").style.display = "inline";
-        mostrarProjeto();
-      }).catch(alert);
+      if (instituicao && turma) {
+        const chave = `${instituicao}_${turma}`;
+        localStorage.setItem(chave, conteudo);
+        alert("Projeto salvo com sucesso!");
+      }
     }
-
-    function logout() {
-      auth.signOut();
-      user = null;
-      document.getElementById("loginBtn").style.display = "inline";
-      document.getElementById("logoutBtn").style.display = "none";
-      mostrarProjeto();
-    }
-
-    auth.onAuthStateChanged(u => {
-      user = u;
-      document.getElementById("loginBtn").style.display = u ? "none" : "inline";
-      document.getElementById("logoutBtn").style.display = u ? "inline" : "none";
-    });
   </script>
 </body>
 
