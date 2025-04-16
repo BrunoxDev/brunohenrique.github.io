@@ -1,55 +1,35 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
-
-// Conectar ao MongoDB
-mongoose.connect('mongodb://localhost:27017/projetos', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Banco de dados conectado'))
-  .catch(err => console.log(err));
+const PORT = 3000;
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Modelo de dados do projeto
-const projetoSchema = new mongoose.Schema({
-  conteudo: String,
-});
+// "Banco de dados" fictício
+const users = [
+  { username: "aluno", password: "tecnologiaevida", role: "aluno" },
+  { username: "ADM", password: "ADMSOUEU", role: "admin" }
+];
 
-const Projeto = mongoose.model('Projeto', projetoSchema);
+// Rota de login
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
 
-// Rota para obter o conteúdo do projeto
-app.get('/projeto', async (req, res) => {
-  const projeto = await Projeto.findOne();
-  if (projeto) {
-    res.json(projeto);
-  } else {
-    res.status(404).json({ message: 'Projeto não encontrado' });
-  }
-});
+  const user = users.find(u => u.username === username && u.password === password);
 
-// Rota para salvar o conteúdo editado
-app.post('/projeto', async (req, res) => {
-  const { conteudo } = req.body;
-  let projeto = await Projeto.findOne();
-
-  if (projeto) {
-    // Se o projeto já existir, atualiza o conteúdo
-    projeto.conteudo = conteudo;
-  } else {
-    // Caso contrário, cria um novo projeto
-    projeto = new Projeto({ conteudo });
+  if (!user) {
+    return res.status(401).json({ message: 'Credenciais inválidas' });
   }
 
-  await projeto.save();
-  res.json(projeto);
+  // Autenticado com sucesso
+  return res.json({ message: 'Login realizado com sucesso', role: user.role });
 });
 
-// Iniciar o servidor
-const PORT = process.env.PORT || 5000;
+// Inicializa o servidor
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
