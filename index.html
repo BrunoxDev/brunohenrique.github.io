@@ -188,6 +188,36 @@
     .admin .admin-only {
       display: block;
     }
+
+    /* Melhorias para os selects */
+    select {
+      background-color: #1e1e2f;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      border-radius: 5px;
+      padding: 8px;
+      margin: 5px 0 15px 0;
+      width: 100%;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    /* Estilo para o textarea de edição */
+    .edit-textarea {
+      width: 100%;
+      min-height: 200px;
+      background-color: #1e1e2f;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      border-radius: 5px;
+      padding: 10px;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 
@@ -292,13 +322,14 @@
         </select>
 
         <label for="adminTurma">Selecione a turma ou curso:</label>
-        <select id="adminTurma">
+        <select id="adminTurma" onchange="adminMostrarProjeto()">
           <option value="">-- Escolha a turma --</option>
         </select>
 
         <div id="adminProjetoContent" class="card">
-          <h3>Informações do Projeto</h3>
-          <div id="adminParagrafoProjeto"></div>
+          <h3>Editar Conteúdo da Turma</h3>
+          <textarea id="adminTextoProjeto" class="edit-textarea"></textarea>
+          <button onclick="salvarConteudo()" class="login-btn">Salvar Alterações</button>
         </div>
       </section>
     </div>
@@ -307,66 +338,218 @@
   </div>
 
   <script>
-    let turmaInfo = {
-      CLIP: {
-        "6º ano": "Projeto de Robótica com Arduino",
-        "7º ano": "Lógica de Programação com C++",
-        "8º ano": "Programação de Jogos com Scratch",
-        "9º ano": "Desenvolvimento de Games com Unity"
+    // Dados de login
+    const usuarios = {
+      admin: {
+        username: "professor",
+        password: "bruno123",
+        nome: "Professor Bruno",
+        tipo: "admin"
       },
-      Continental: {
-        "PRE I": "Iniciação à Robótica",
-        "PRE II": "Introdução à Lógica de Programação",
-        "1º ao 5º": "Programação de Jogos",
-        "6º ao 9º": "Robótica com Arduino e Projetos Interativos"
-      },
-      Alfredo: {
-        "6º ano": "Robótica e Automação",
-        "7º ano": "Computação Gráfica e Animações",
-        "8º ano": "Desenvolvimento de Aplicações Mobile",
-        "9º ano": "Programação em Python"
-      },
-      Happy: {
-        "GameFroot": "Desenvolvimento de Jogos com GameFroot",
-        "Unity 3D": "Desenvolvimento de Games 3D",
-        "Scratch": "Introdução ao Scratch",
-        "GameMaker": "Desenvolvimento de Jogos com GameMaker"
+      aluno1: {
+        username: "aluno",
+        password: "aluno123",
+        nome: "Aluno Teste",
+        tipo: "aluno"
       }
     };
 
+    // Dados das turmas corrigidos
+    const turmasPorInstituicao = {
+      'CLIP': {
+        '6° ano': `Tópico de Aulas: 
+        1° Bimestre - Uso Consciente da Inteligência Artificial (Conteudos adaptados ao 6° ano).
+        2° Bimestre - Excel e Análise de Dados (Conteudos adaptados ao 6° ano).
+        3° Bimestre - Design Digital com Canva (Conteudos adaptados ao 6° ano).
+        4° Bimestre - Programação e Automação Básica (Conteudos adaptados ao 6° ano).`,
+        
+        '7° ano': `Tópico de Aulas: 
+        1° Bimestre - Uso Consciente da Inteligência Artificial (Conteudos adaptados ao 7° ano).
+        2° Bimestre - Excel e Análise de Dados (Conteudos adaptados ao 7° ano).
+        3° Bimestre - Design Digital com Canva (Conteudos adaptados ao 7° ano).
+        4° Bimestre - Programação e Automação Básica (Conteudos adaptados ao 7° ano).`,
+        
+        '8° ano': `Tópico de Aulas: 
+        1° Bimestre - Uso Consciente da Inteligência Artificial (Conteudos adaptados ao 8° ano).
+        2° Bimestre - Excel e Análise de Dados (Conteudos adaptados ao 8° ano).
+        3° Bimestre - Design Digital com Canva (Conteudos adaptados ao 8° ano).
+        4° Bimestre - Programação e Automação Básica. (Conteudos adaptados ao 8° ano)`,
+        
+        '9° ano': `Tópico de Aulas: 
+        1° Bimestre - Uso Consciente da Inteligência Artificial (Conteudos adaptados ao 9° ano).
+        2° Bimestre - Excel e Análise de Dados (Conteudos adaptados ao 9° ano).
+        3° Bimestre - Design Digital com Canva (Conteudos adaptados ao 9° ano).
+        4° Bimestre - Programação e Automação Básica. (Conteudos adaptados ao 9° ano)`
+      },
+      'Continental': {
+        "Pré I": {
+          "1° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "4° Bimestre": "Aulas práticas de atividades lúdicas com foco em interação e manipulação do computador.",
+          "Anotações": "As aulas devem ser focadas em atividades simples e interativas, visando despertar a curiosidade digital."
+        },
+        "Pré II": {
+          "1° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "4° Bimestre": "Aulas práticas com foco na integração de tecnologias simples em atividades do dia a dia.",
+          "Anotações": "Trabalhar a exploração de aplicativos básicos e o desenvolvimento de curiosidade digital."
+        },
+        "1° ano": {
+          "1° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "4° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "Anotações": "Enfatizar a segurança online e habilidades iniciais de busca e organização de informações."
+        },
+        "2° ano": {
+          "1° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",      
+          "2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "4° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "Anotações": "Focar no desenvolvimento de habilidades básicas de produtividade e apresentação."
+        },
+        "3° ano": {
+          "1° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "4° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "Anotações": "Encorajar a resolução de problemas através da internet, uso de ferramentas como Hour of Code, desenvolvendo habilidades práticas."
+        },
+        "4° ano": {
+          "1° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "4° Bimestre": "Lógica de Programação em Blocos, uso de ferramentas como Scratch",
+          "Anotações": "Desenvolver habilidades de construção de projetos interativos e programação prática."
+        },
+        "5° ano": {
+          "1° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "4° Bimestre": "Uso consciente da Inteligência Artifical e como trabalhar lado a lado.",
+          "Anotações": "Integrar conceitos de produtividade junto com a Inteligência Artifical."
+        },
+        "6° ano": {
+          "1° ao 2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Introdução à robótica com Arduino e Projetos Práticos da Apostila.",
+          "4° Bimestre": "Desenvolvimento de projetos práticos de robótica, integrando sensores e atuadores.",
+          "Anotações": "Aprofundar o ensino de programação e robótica com foco em projetos práticos."
+        },
+        "7° ano": {
+          "1° ao 2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Início da robótica com Arduino, projetos simples de sensores e atuadores.",
+          "4° Bimestre": "Desenvolvimento de projetos de robótica e programação com C++.",
+          "Anotações": "Aprofundar as habilidades de programação e robótica com foco em resolução de problemas."
+        },
+        "8° ano": {
+          "1° ao 2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Início da robótica com Arduino, projetos simples de sensores e atuadores.",
+          "4° Bimestre": "Desenvolvimento de projetos de robótica e programação com C++.",
+          "Anotações": "Aprofundar as habilidades de programação e robótica com foco em resolução de problemas."
+        },
+        "9° ano": {
+          "1° ao 2° Bimestre": "Aplicação da apostila em sala juntamente com aula prática de computador.",
+          "3° Bimestre": "Início da robótica com Arduino, projetos simples de sensores e atuadores.",
+          "4° Bimestre": "Desenvolvimento de projetos de robótica e programação com C++.",
+          "Anotações": "Aprofundar as habilidades de programação e robótica com foco em resolução de problemas."
+        }
+      },
+      'Alfredo': {
+        '1° ano': 'Aulas com a Professora Gabriela :-) ',
+        '2° ano': 'Aulas com a Professora Gabriela :-) ',
+        '3° ano': 'Aulas com a Professora Gabriela :-) ',
+        '4° ano': 'Aulas com a Professora Gabriela :-) ',
+        '5° ano': 'Aulas com a Professora Gabriela :-) ',
+        '6° ano': '1° Bimestre: \n Edição dos dois vídeos sobre Roça e Sertão (Introdução do Canal e Vídeo falando sobre roça e sertão, separado por meninos e meninas). \n 2° Bimestre: \n A definir \n 3° Bimestre: \n A Definir \n 4° Bimestre: \n A Definir',
+        '7° ano': '1° Bimestre: \n Projeto com MicroBit de checagem da Umidade do Solo com MicroBit \n 2° Bimestre: \n A definir \n 3° Bimestre: \n A Definir \n 4° Bimestre: \n A Definir',
+        '8° ano': '1° Bimestre: \n Projeto com MicroBit de checagem da Umidade do Solo com Arduino Uno \n 2° Bimestre: \n A definir \n 3° Bimestre: \n A Definir \n 4° Bimestre: \n A Definir',
+        '9° ano': '1° Bimestre: \n Aplicativo e ChatBot sobre roça e sertão feito com Thunkable e LandBot. \n 2° Bimestre: \n A definir \n 3° Bimestre: \n A Definir \n 4° Bimestre: \n A Definir'
+      },
+      'Happy': {
+        'Desenvolvimento de Games Construct': 'Parágrafo personalizado do curso de Desenvolvimento de Games Construct.',
+        'Desenvolvimento de Games 2D Unity': 'Parágrafo personalizado do curso de Desenvolvimento de Games 2D Unity.',
+        'Desenvolvimento de Games 3D Unity': 'Desenvolvimento de Games 3D. Projeto Gladiador "Aulas do Módulo 02" onde iremos adicionar movimentos e um BOSS no game.',
+        'Desenvolvimento de Games Game Froot': 'Parágrafo personalizado do curso de Desenvolvimento de Games Game Froot.',
+        'Desenvolvimento de Games Scratch': 'Parágrafo personalizado do curso de Desenvolvimento de Games Scratch.',
+        'Desenvolvimento de Games Game Maker': 'Parágrafo personalizado do curso de Desenvolvimento de Games Game Maker.',
+        'Desenvolvimento de Games Unreal': 'Parágrafo personalizado do curso de Desenvolvimento de Games Unreal.',
+        'Influenciador Digital': 'Parágrafo personalizado do curso de Influenciador Digital.',
+        'Robótica com MicroBit': 'Parágrafo personalizado do curso de Robótica com MicroBit.',
+        'Robótica com Arduino': 'Parágrafo personalizado do curso de Robótica com Arduino.',
+        'Lógica de Programação com C#': 'Parágrafo personalizado do curso de Lógica de Programação com C#.',
+        'Lógica de Programação com C++': 'Parágrafo personalizado do curso de Lógica de Programação com C++.',
+        'Lógica de Programação com Python': 'Parágrafo personalizado do curso de Lógica de Programação com Python.'
+      }
+    };
+
+    // Funções de Login/Logout
     function login() {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
       const userType = document.querySelector('input[name="userType"]:checked').value;
+      const messageDiv = document.getElementById('loginMessage');
       
-      // Aqui você pode adicionar lógica para verificar o login
-      if (username === "admin" && password === "1234" && userType === "admin") {
-        document.getElementById("loginForm").style.display = "none";
-        document.getElementById("adminArea").style.display = "block";
-      } else if (userType === "aluno") {
-        document.getElementById("loginForm").style.display = "none";
-        document.getElementById("contentArea").style.display = "block";
+      messageDiv.textContent = '';
+      
+      if (!username || !password) {
+        messageDiv.textContent = 'Por favor, preencha todos os campos!';
+        return;
+      }
+      
+      let usuarioValido = null;
+      
+      for (const key in usuarios) {
+        if (usuarios[key].username === username && usuarios[key].password === password) {
+          usuarioValido = usuarios[key];
+          break;
+        }
+      }
+      
+      if (usuarioValido) {
+        if (usuarioValido.tipo !== userType) {
+          messageDiv.textContent = `Este usuário é do tipo ${usuarioValido.tipo}, mas você selecionou ${userType}.`;
+          return;
+        }
+        
+        document.getElementById('loginForm').style.display = 'none';
+        
+        if (userType === 'admin') {
+          document.getElementById('adminArea').style.display = 'block';
+          adminAtualizarTurmas();
+        } else {
+          document.getElementById('contentArea').style.display = 'block';
+        }
       } else {
-        document.getElementById("loginMessage").innerText = "Usuário ou senha incorretos!";
+        messageDiv.textContent = 'Usuário ou senha incorretos!';
       }
     }
 
     function logout() {
-      document.getElementById("loginForm").style.display = "block";
-      document.getElementById("contentArea").style.display = "none";
-      document.getElementById("adminArea").style.display = "none";
+      document.getElementById('adminArea').style.display = 'none';
+      document.getElementById('contentArea').style.display = 'none';
+      document.getElementById('loginForm').style.display = 'flex';
+      
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('loginMessage').textContent = '';
     }
 
+    // Funções para área do aluno
     function atualizarTurmas() {
       const instituicao = document.getElementById("instituicao").value;
       const turmaSelect = document.getElementById("turma");
-      turmaSelect.innerHTML = "<option value=''>-- Escolha a turma --</option>";
 
-      if (instituicao && turmaInfo[instituicao]) {
-        Object.keys(turmaInfo[instituicao]).forEach(turma => {
-          const option = document.createElement("option");
+      turmaSelect.innerHTML = '<option value="">-- Escolha a turma --</option>';
+
+      if (instituicao && turmasPorInstituicao[instituicao]) {
+        const turmas = Object.keys(turmasPorInstituicao[instituicao]);
+
+        turmas.forEach(turma => {
+          const option = document.createElement('option');
           option.value = turma;
-          option.innerText = turma;
+          option.textContent = turma;
           turmaSelect.appendChild(option);
         });
       }
@@ -378,40 +561,85 @@
       const projetoContent = document.getElementById("projetoContent");
       const paragrafoProjeto = document.getElementById("paragrafo-projeto");
 
-      if (instituicao && turma && turmaInfo[instituicao][turma]) {
-        paragrafoProjeto.innerText = turmaInfo[instituicao][turma];
+      if (instituicao && turma && turmasPorInstituicao[instituicao] && turmasPorInstituicao[instituicao][turma]) {
+        const conteudoTurma = turmasPorInstituicao[instituicao][turma];
+        
+        if (typeof conteudoTurma === 'object' && conteudoTurma !== null) {
+          let html = '';
+          for (const [key, value] of Object.entries(conteudoTurma)) {
+            html += `<p><strong>${key}:</strong> ${value}</p>`;
+          }
+          paragrafoProjeto.innerHTML = html;
+        } else {
+          // Formata quebras de linha para HTML
+          const textoFormatado = conteudoTurma.replace(/\n/g, '<br>');
+          paragrafoProjeto.innerHTML = textoFormatado;
+        }
+        
         projetoContent.style.display = "block";
       } else {
         projetoContent.style.display = "none";
       }
     }
-    
+
+    // Funções para área do admin
     function adminAtualizarTurmas() {
       const instituicao = document.getElementById("adminInstituicao").value;
       const turmaSelect = document.getElementById("adminTurma");
-      turmaSelect.innerHTML = "<option value=''>-- Escolha a turma --</option>";
 
-      if (instituicao && turmaInfo[instituicao]) {
-        Object.keys(turmaInfo[instituicao]).forEach(turma => {
-          const option = document.createElement("option");
+      turmaSelect.innerHTML = '<option value="">-- Escolha a turma --</option>';
+
+      if (instituicao && turmasPorInstituicao[instituicao]) {
+        const turmas = Object.keys(turmasPorInstituicao[instituicao]);
+
+        turmas.forEach(turma => {
+          const option = document.createElement('option');
           option.value = turma;
-          option.innerText = turma;
+          option.textContent = turma;
           turmaSelect.appendChild(option);
         });
       }
     }
 
-    function mostrarAdminProjeto() {
+    function adminMostrarProjeto() {
       const instituicao = document.getElementById("adminInstituicao").value;
       const turma = document.getElementById("adminTurma").value;
       const projetoContent = document.getElementById("adminProjetoContent");
-      const paragrafoProjeto = document.getElementById("adminParagrafoProjeto");
+      const textoProjeto = document.getElementById("adminTextoProjeto");
 
-      if (instituicao && turma && turmaInfo[instituicao][turma]) {
-        paragrafoProjeto.innerText = turmaInfo[instituicao][turma];
+      if (instituicao && turma && turmasPorInstituicao[instituicao] && turmasPorInstituicao[instituicao][turma]) {
+        const conteudoTurma = turmasPorInstituicao[instituicao][turma];
+        
+        if (typeof conteudoTurma === 'object' && conteudoTurma !== null) {
+          textoProjeto.value = JSON.stringify(conteudoTurma, null, 2);
+        } else {
+          textoProjeto.value = conteudoTurma;
+        }
+        
         projetoContent.style.display = "block";
       } else {
         projetoContent.style.display = "none";
+      }
+    }
+
+    function salvarConteudo() {
+      const instituicao = document.getElementById("adminInstituicao").value;
+      const turma = document.getElementById("adminTurma").value;
+      const textoProjeto = document.getElementById("adminTextoProjeto").value;
+
+      if (instituicao && turma) {
+        try {
+          // Tenta analisar como JSON (para objetos como o Continental)
+          const parsedContent = JSON.parse(textoProjeto);
+          turmasPorInstituicao[instituicao][turma] = parsedContent;
+          alert('Conteúdo salvo com sucesso!');
+        } catch (e) {
+          // Se não for JSON válido, salva como texto simples
+          turmasPorInstituicao[instituicao][turma] = textoProjeto;
+          alert('Conteúdo salvo com sucesso!');
+        }
+      } else {
+        alert('Selecione uma instituição e turma antes de salvar!');
       }
     }
   </script>
