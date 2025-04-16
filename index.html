@@ -122,6 +122,21 @@
       display: none;
     }
 
+    #logoutBtn {
+      margin: 20px auto;
+      display: block;
+      padding: 10px 20px;
+      background-color: #ff0066;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #logoutBtn:hover {
+      background-color: #cc0055;
+    }
+
   </style>
 </head>
 
@@ -165,12 +180,12 @@
 
         <div id="projetoContent" class="card">
           <h3>Informações do Projeto</h3>
-          <div id="paragrafo-projeto" class="paragrafo-projeto">
-            Este é o parágrafo personalizado para o projeto selecionado. Modifique o conteúdo diretamente no código.
-          </div>
+          <div id="paragrafo-projeto">Este é o parágrafo personalizado para o projeto selecionado.</div>
         </div>
       </section>
     </div>
+
+    <button id="logoutBtn" onclick="logout()">Sair</button>
   </div>
 
   <script>
@@ -230,25 +245,21 @@
         localStorage.setItem("role", "aluno");
         showContent();
       } else if (username === "ADM" && password === "ADMSOUEU") {
-        localStorage.setItem("role", "ADM");
+        localStorage.setItem("role", "admin");
         showContent();
       } else {
-        alert("Usuário ou senha inválidos!");
+        alert("Credenciais inválidas!");
       }
     }
 
     function showContent() {
-      const role = localStorage.getItem("role");
       document.getElementById("loginForm").style.display = "none";
       document.getElementById("contentArea").style.display = "block";
+    }
 
-      if (role === "ADM") {
-        // Exibir funcionalidades de edição
-        document.getElementById("projetoContent").contentEditable = true;
-      } else {
-        // Apenas leitura para alunos
-        document.getElementById("projetoContent").contentEditable = false;
-      }
+    function logout() {
+      localStorage.removeItem("role");
+      location.reload();
     }
 
     function atualizarTurmas() {
@@ -256,29 +267,35 @@
       const turmaSelect = document.getElementById("turma");
       turmaSelect.innerHTML = '<option value="">-- Escolha a turma --</option>';
 
-      if (instituicao && turmasPorInstituicao[instituicao]) {
-        const turmas = turmasPorInstituicao[instituicao];
-        for (let turma in turmas) {
+      if (turmasPorInstituicao[instituicao]) {
+        Object.keys(turmasPorInstituicao[instituicao]).forEach(turma => {
           const option = document.createElement("option");
           option.value = turma;
           option.textContent = turma;
           turmaSelect.appendChild(option);
-        }
+        });
       }
     }
 
     function mostrarProjeto() {
       const instituicao = document.getElementById("instituicao").value;
       const turma = document.getElementById("turma").value;
+      const projetoDiv = document.getElementById("projetoContent");
+      const paragrafo = document.getElementById("paragrafo-projeto");
 
-      if (instituicao && turma && turmasPorInstituicao[instituicao][turma]) {
-        const projetoInfo = turmasPorInstituicao[instituicao][turma];
-        document.getElementById("paragrafo-projeto").textContent = projetoInfo;
-        document.getElementById("projetoContent").style.display = "block";
+      if (turmasPorInstituicao[instituicao] && turmasPorInstituicao[instituicao][turma]) {
+        paragrafo.textContent = turmasPorInstituicao[instituicao][turma];
+        projetoDiv.style.display = "block";
       } else {
-        document.getElementById("projetoContent").style.display = "none";
+        projetoDiv.style.display = "none";
       }
     }
+
+    // Autologin se já estiver logado
+    window.onload = () => {
+      const role = localStorage.getItem("role");
+      if (role) showContent();
+    };
   </script>
 </body>
 </html>
