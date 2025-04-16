@@ -1,287 +1,237 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bruno Henrique | Professor de TI</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Geek do Professor Bruno</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-        }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #1e1e2f;
+      color: #00ffcc;
+      line-height: 1.6;
+    }
 
-        header {
-            background-color: #2C3E50;
-            color: #fff;
-            padding: 2rem 0;
-            text-align: center;
-        }
+    header {
+      background: #12121a;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid #00ffcc;
+    }
 
-        header h1 {
-            font-size: 2.5rem;
-        }
+    header h1 {
+      font-size: 2.5rem;
+      color: #00ffcc;
+    }
 
-        header p {
-            font-size: 1.2rem;
-            margin-top: 0.5rem;
-        }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      background-color: #1b1b2f;
+    }
 
-        nav {
-            background-color: #34495E;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            padding: 1rem;
-        }
+    nav a {
+      color: #00ffcc;
+      text-decoration: none;
+      font-weight: bold;
+      border: 2px solid #00ffcc;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
 
-        nav a {
-            color: #fff;
-            margin: 0 2rem;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-        }
+    nav a:hover {
+      background-color: #00ffcc;
+      color: #1e1e2f;
+    }
 
-        nav a:hover {
-            color: #1abc9c;
-        }
+    .content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 3rem auto;
-        }
+    section {
+      margin-bottom: 40px;
+    }
 
-        .section {
-            margin-bottom: 3rem;
-        }
+    h2 {
+      border-left: 5px solid #00ffcc;
+      padding-left: 15px;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
 
-        .section h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #2C3E50;
-        }
+    .card {
+      background-color: #2a2a40;
+      padding: 20px;
+      margin: 10px 0;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ffcc55;
+    }
 
-        .select-box {
-            margin-bottom: 2rem;
-        }
+    .card h3 {
+      color: #00ccff;
+    }
 
-        select,
-        button {
-            padding: 0.8rem;
-            font-size: 1rem;
-            background-color: #fff;
-            border: 1px solid #BDC3C7;
-            border-radius: 5px;
-            width: 200px;
-            margin-right: 1rem;
-        }
+    select, textarea, button {
+      margin: 10px 0;
+      padding: 10px;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #12121a;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
+    }
 
-        .card {
-            background-color: #fff;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            color: #2980b9;
-            margin-bottom: 1rem;
-        }
-
-        .card p {
-            color: #7f8c8d;
-            margin-bottom: 1rem;
-        }
-
-        .card a {
-            display: inline-block;
-            background-color: #1abc9c;
-            color: #fff;
-            padding: 0.8rem 1.5rem;
-            text-decoration: none;
-            border-radius: 5px;
-            text-align: center;
-            transition: background-color 0.3s ease;
-        }
-
-        .card a:hover {
-            background-color: #16a085;
-        }
-
-        footer {
-            background-color: #2C3E50;
-            color: #fff;
-            padding: 1rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        footer p {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                width: 100%;
-                padding: 0 1rem;
-            }
-
-            nav a {
-                margin: 0 1rem;
-            }
-        }
-    </style>
+    #projetoContent {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
+  <header>
+    <h1>Portal Geek do Professor Bruno</h1>
+    <button onclick="login()" id="loginBtn">Login</button>
+    <button onclick="logout()" id="logoutBtn" style="display:none">Logout</button>
+  </header>
 
-    <!-- Header -->
-    <header>
-        <h1>Bruno Henrique</h1>
-        <p>Professor de Tecnologia da Informação | Desenvolvedor | Mentor</p>
-    </header>
+  <nav>
+    <a href="#clip">CLIP</a>
+    <a href="#continental">Continental</a>
+    <a href="#alfredo">Alfredo</a>
+    <a href="#happy">Happy</a>
+  </nav>
 
-    <!-- Navigation -->
-    <nav>
-        <a href="#sobre">Sobre Mim</a>
-        <a href="#projetos">Projetos para Alunos</a>
-        <a href="#materiais">Materiais de Apoio</a>
-        <a href="#contato">Contato</a>
-    </nav>
+  <div class="content">
+    <section>
+      <h2>Projetos por Turma</h2>
 
-    <!-- Main Content -->
-    <div class="container">
+      <label for="instituicao">Selecione a instituição:</label>
+      <select id="instituicao" onchange="atualizarTurmas()">
+        <option value="">-- Escolha --</option>
+        <option value="CLIP">Colégio CLIP</option>
+        <option value="Continental">Colégio Continental</option>
+        <option value="Alfredo">Colégio Alfredo Castro</option>
+        <option value="Happy">Happy</option>
+      </select>
 
-        <!-- Sobre Mim Section -->
-        <div id="sobre" class="section">
-            <h2>Sobre Mim</h2>
-            <div class="card">
-                <p>Olá! Eu sou o Bruno Henrique, um apaixonado por ensinar tecnologia, programação e robótica. Com experiência em diferentes níveis de ensino, busco capacitar meus alunos para o mercado de trabalho e estimular a criatividade no desenvolvimento de projetos.</p>
-            </div>
-        </div>
+      <label for="turma">Selecione a turma ou curso:</label>
+      <select id="turma" onchange="mostrarProjeto()">
+        <option value="">-- Escolha a turma --</option>
+      </select>
 
-        <!-- Projetos para Alunos Section -->
-        <div id="projetos" class="section">
-            <h2>Projetos para Alunos</h2>
+      <div id="projetoContent" class="card">
+        <h3>Informações do Projeto</h3>
+        <textarea id="editor" rows="6" style="width:100%;"></textarea>
+        <br>
+        <button onclick="salvarProjeto()" id="saveBtn">Salvar</button>
+      </div>
+    </section>
+  </div>
 
-            <!-- Select Institution -->
-            <div class="select-box">
-                <label for="instituicao">Selecione a Instituição de Ensino:</label>
-                <select id="instituicao">
-                    <option value="clip">Colégio CLIP</option>
-                    <option value="alfredo-castro">Colégio Alfredo Castro</option>
-                    <option value="continental">Colégio Continental</option>
-                    <option value="happy">Happy</option>
-                </select>
-                <button onclick="mostrarTurmas()">Selecionar</button>
-            </div>
+  <script>
+    const firebaseConfig = {
+      apiKey: "SUA_API_KEY",
+      authDomain: "SEU_DOMINIO.firebaseapp.com",
+      projectId: "SEU_PROJECT_ID",
+      storageBucket: "SEU_BUCKET.appspot.com",
+      messagingSenderId: "SEU_ID",
+      appId: "SUA_APP_ID"
+    };
 
-            <!-- Select Turma -->
-            <div id="turmas" class="select-box" style="display:none;">
-                <label for="turma">Selecione a Turma:</label>
-                <select id="turma">
-                    <!-- Options will be populated dynamically -->
-                </select>
-                <button onclick="mostrarProjeto()">Ir para o Projeto</button>
-            </div>
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-            <div id="projetoContent" class="card" style="display:none;">
-                <h3>Informações do Projeto</h3>
-                <p>Esta página é onde você pode adicionar informações sobre o projeto da turma selecionada.</p>
-            </div>
-        </div>
+    const turmasPorInstituicao = {
+      'CLIP': ['6° ano', '7° ano', '8° ano', '9° ano'],
+      'Continental': ['Pré I', 'Pré II', '1° ano', '2° ano', '3° ano', '4° ano', '5° ano', '6° ano', '7° ano', '8° ano', '9° ano'],
+      'Alfredo': ['1° ano', '2° ano', '3° ano', '4° ano', '5° ano', '6° ano', '7° ano', '8° ano', '9° ano'],
+      'Happy': ['Arduino', 'Microbit', 'Games JR.', 'Games 2D', 'Games 3D', 'Apps com Python', 'Cientistas Digitais']
+    };
 
-        <!-- Materiais de Apoio Section -->
-        <div id="materiais" class="section">
-            <h2>Materiais de Apoio</h2>
-            <div class="card">
-                <h3>Guia de Programação em Python</h3>
-                <p>Este material é voltado para quem quer aprender programação com Python, abrangendo desde o básico até conceitos mais avançados.</p>
-                <a href="https://linkdoprotapython.com" target="_blank">Acessar Material</a>
-            </div>
-            <div class="card">
-                <h3>Introdução ao Desenvolvimento de Games com Unity</h3>
-                <p>Aprenda os conceitos fundamentais do desenvolvimento de jogos, desde a criação de personagens até a implementação de física no Unity.</p>
-                <a href="https://linkdoprotunity.com" target="_blank">Acessar Material</a>
-            </div>
-            <div class="card">
-                <h3>Arduino para Iniciantes</h3>
-                <p>Esse guia ensina como começar a trabalhar com o Arduino, abordando desde a instalação até a criação de circuitos simples.</p>
-                <a href="https://linkdoarduino.com" target="_blank">Acessar Material</a>
-            </div>
-        </div>
+    let user = null;
 
-        <!-- Contato Section -->
-        <div id="contato" class="section">
-            <h2>Contato</h2>
-            <div class="card">
-                <p>Entre em contato para dúvidas, sugestões ou novos projetos:</p>
-                <ul>
-                    <li>Email: <a href="mailto:brunosilva11001100@gmail.com">brunosilva11001100@gmail.com</a></li>
-                    <li>LinkedIn: <a href="https://linkedin.com/in/bruno-ha9a734142" target="_blank">linkedin.com/in/bruno-ha9a734142</a></li>
-                </ul>
-            </div>
-        </div>
+    function atualizarTurmas() {
+      const instituicao = document.getElementById("instituicao").value;
+      const turmaSelect = document.getElementById("turma");
+      turmaSelect.innerHTML = '<option value="">-- Escolha a turma --</option>';
 
-    </div>
+      if (instituicao && turmasPorInstituicao[instituicao]) {
+        turmasPorInstituicao[instituicao].forEach(turma => {
+          const option = document.createElement("option");
+          option.value = turma;
+          option.textContent = turma;
+          turmaSelect.appendChild(option);
+        });
+      }
+    }
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Bruno Henrique | Todos os direitos reservados</p>
-    </footer>
+    async function mostrarProjeto() {
+      const instituicao = document.getElementById("instituicao").value;
+      const turma = document.getElementById("turma").value;
+      const editor = document.getElementById("editor");
 
-    <script>
-        const instituicoes = {
-            "clip": {
-                turmas: ["6° ano", "7° ano", "8° ano", "9° ano"]
-            },
-            "alfredo-castro": {
-                turmas: ["1° ano", "2° ano", "3° ano", "4° ano", "5° ano", "6° ano", "7° ano", "8° ano", "9° ano"]
-            },
-            "continental": {
-                turmas: ["PRE I", "PRE II", "1° ano", "2° ano", "3° ano", "4° ano", "5° ano", "6° ano", "7° ano", "8° ano", "9° ano"]
-            },
-            "happy": {
-                turmas: ["Arduino", "Microbit", "Desenvolvimento de Games JR.", "Desenvolvimento de Games 2D", "Desenvolvimento de Games 3D", "Desenvolvimento de Games e Apps com Python", "Cientistas Digitais"]
-            }
-        };
+      if (instituicao && turma) {
+        const chave = `${instituicao}_${turma}`;
+        const doc = await db.collection("projetos").doc(chave).get();
+        editor.value = doc.exists ? doc.data().texto : "";
+        document.getElementById("projetoContent").style.display = "block";
+        document.getElementById("editor").disabled = !user;
+        document.getElementById("saveBtn").style.display = user ? 'inline' : 'none';
+      }
+    }
 
-        function mostrarTurmas() {
-            const instituicao = document.getElementById('instituicao').value;
-            const turmasSelect = document.getElementById('turma');
-            turmasSelect.innerHTML = ""; // Clear previous options
+    async function salvarProjeto() {
+      if (!user) return;
+      const instituicao = document.getElementById("instituicao").value;
+      const turma = document.getElementById("turma").value;
+      const texto = document.getElementById("editor").value;
+      const chave = `${instituicao}_${turma}`;
+      await db.collection("projetos").doc(chave).set({ texto });
+      alert("Projeto salvo com sucesso!");
+    }
 
-            instituicoes[instituicao].turmas.forEach(turma => {
-                const option = document.createElement("option");
-                option.value = turma;
-                option.textContent = turma;
-                turmasSelect.appendChild(option);
-            });
+    function login() {
+      const email = prompt("Digite seu e-mail:");
+      const senha = prompt("Digite sua senha:");
+      auth.signInWithEmailAndPassword(email, senha).then(cred => {
+        user = cred.user;
+        document.getElementById("loginBtn").style.display = "none";
+        document.getElementById("logoutBtn").style.display = "inline";
+        mostrarProjeto();
+      }).catch(alert);
+    }
 
-            document.getElementById('turmas').style.display = "block";
-        }
+    function logout() {
+      auth.signOut();
+      user = null;
+      document.getElementById("loginBtn").style.display = "inline";
+      document.getElementById("logoutBtn").style.display = "none";
+      mostrarProjeto();
+    }
 
-        function mostrarProjeto() {
-            document.getElementById('projetoContent').style.display = "block";
-        }
-    </script>
-
+    auth.onAuthStateChanged(u => {
+      user = u;
+      document.getElementById("loginBtn").style.display = u ? "none" : "inline";
+      document.getElementById("logoutBtn").style.display = u ? "inline" : "none";
+    });
+  </script>
 </body>
 
 </html>
