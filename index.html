@@ -84,7 +84,7 @@
       color: #00ccff;
     }
 
-    select, textarea, button {
+    select {
       margin: 10px 0;
       padding: 10px;
       font-family: 'Orbitron', sans-serif;
@@ -96,6 +96,15 @@
 
     #projetoContent {
       display: none;
+    }
+
+    .paragrafo-projeto {
+      margin-top: 20px;
+      background-color: #12121a;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
     }
   </style>
 </head>
@@ -132,9 +141,10 @@
 
       <div id="projetoContent" class="card">
         <h3>Informações do Projeto</h3>
-        <textarea id="editor" rows="6" style="width:100%;"></textarea>
-        <br>
-        <button onclick="salvarProjeto()">Salvar</button>
+        <!-- Parágrafo personalizado -->
+        <div id="paragrafo-projeto" class="paragrafo-projeto">
+          Este é o parágrafo personalizado para o projeto selecionado. Modifique o conteúdo diretamente no código.
+        </div>
       </div>
     </section>
   </div>
@@ -165,25 +175,21 @@
     function mostrarProjeto() {
       const instituicao = document.getElementById("instituicao").value;
       const turma = document.getElementById("turma").value;
-      const editor = document.getElementById("editor");
 
       if (instituicao && turma) {
         const chave = `${instituicao}_${turma}`;
-        const conteudo = localStorage.getItem(chave) || '';
-        editor.value = conteudo;
+        // Aqui você pode customizar o conteúdo do parágrafo de acordo com a instituição e turma
+        let paragrafo = "Este é o parágrafo personalizado para o projeto selecionado. Modifique o conteúdo diretamente no código.";
+
+        // Personalizando o conteúdo para a turma selecionada
+        if (instituicao === 'CLIP' && turma === '6° ano') {
+          paragrafo = "Projeto para o 6° ano do Colégio CLIP.";
+        } else if (instituicao === 'Continental' && turma === 'Pré I') {
+          paragrafo = "Projeto para a turma Pré I do Colégio Continental.";
+        }
+
+        document.getElementById("paragrafo-projeto").innerText = paragrafo;
         document.getElementById("projetoContent").style.display = "block";
-      }
-    }
-
-    function salvarProjeto() {
-      const instituicao = document.getElementById("instituicao").value;
-      const turma = document.getElementById("turma").value;
-      const conteudo = document.getElementById("editor").value;
-
-      if (instituicao && turma) {
-        const chave = `${instituicao}_${turma}`;
-        localStorage.setItem(chave, conteudo);
-        alert("Projeto salvo com sucesso!");
       }
     }
   </script>
