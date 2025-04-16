@@ -70,6 +70,21 @@
             color: #2C3E50;
         }
 
+        .select-box {
+            margin-bottom: 2rem;
+        }
+
+        select,
+        button {
+            padding: 0.8rem;
+            font-size: 1rem;
+            background-color: #fff;
+            border: 1px solid #BDC3C7;
+            border-radius: 5px;
+            width: 200px;
+            margin-right: 1rem;
+        }
+
         .card {
             background-color: #fff;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -164,20 +179,31 @@
         <!-- Projetos para Alunos Section -->
         <div id="projetos" class="section">
             <h2>Projetos para Alunos</h2>
-            <div class="card">
-                <h3>Projeto 1: Introdução ao Arduino</h3>
-                <p>Este projeto é destinado aos alunos do Ensino Fundamental e Médio. Vamos aprender como programar o Arduino para criar projetos simples e interativos.</p>
-                <a href="https://github.com/seuuser/arduino-introducao" target="_blank">Ver Projeto</a>
+
+            <!-- Select Institution -->
+            <div class="select-box">
+                <label for="instituicao">Selecione a Instituição de Ensino:</label>
+                <select id="instituicao">
+                    <option value="clip">Colégio CLIP</option>
+                    <option value="alfredo-castro">Colégio Alfredo Castro</option>
+                    <option value="continental">Colégio Continental</option>
+                    <option value="happy">Happy</option>
+                </select>
+                <button onclick="mostrarTurmas()">Selecionar</button>
             </div>
-            <div class="card">
-                <h3>Projeto 2: Robótica com Micro:bit</h3>
-                <p>Aprenda a programar e montar robôs usando o micro:bit. Este projeto inclui a construção de robôs para realizar tarefas básicas e também atividades interativas.</p>
-                <a href="https://github.com/seuuser/robotica-microbit" target="_blank">Ver Projeto</a>
+
+            <!-- Select Turma -->
+            <div id="turmas" class="select-box" style="display:none;">
+                <label for="turma">Selecione a Turma:</label>
+                <select id="turma">
+                    <!-- Options will be populated dynamically -->
+                </select>
+                <button onclick="mostrarProjeto()">Ir para o Projeto</button>
             </div>
-            <div class="card">
-                <h3>Projeto 3: Criação de Jogos com Unity</h3>
-                <p>Desenvolva seus primeiros jogos 2D e 3D com Unity. Aprenda a programar interações, personagens e animações!</p>
-                <a href="https://github.com/seuuser/unity-jogos" target="_blank">Ver Projeto</a>
+
+            <div id="projetoContent" class="card" style="display:none;">
+                <h3>Informações do Projeto</h3>
+                <p>Esta página é onde você pode adicionar informações sobre o projeto da turma selecionada.</p>
             </div>
         </div>
 
@@ -219,6 +245,42 @@
     <footer>
         <p>&copy; 2025 Bruno Henrique | Todos os direitos reservados</p>
     </footer>
+
+    <script>
+        const instituicoes = {
+            "clip": {
+                turmas: ["6° ano", "7° ano", "8° ano", "9° ano"]
+            },
+            "alfredo-castro": {
+                turmas: ["1° ano", "2° ano", "3° ano", "4° ano", "5° ano", "6° ano", "7° ano", "8° ano", "9° ano"]
+            },
+            "continental": {
+                turmas: ["PRE I", "PRE II", "1° ano", "2° ano", "3° ano", "4° ano", "5° ano", "6° ano", "7° ano", "8° ano", "9° ano"]
+            },
+            "happy": {
+                turmas: ["Arduino", "Microbit", "Desenvolvimento de Games JR.", "Desenvolvimento de Games 2D", "Desenvolvimento de Games 3D", "Desenvolvimento de Games e Apps com Python", "Cientistas Digitais"]
+            }
+        };
+
+        function mostrarTurmas() {
+            const instituicao = document.getElementById('instituicao').value;
+            const turmasSelect = document.getElementById('turma');
+            turmasSelect.innerHTML = ""; // Clear previous options
+
+            instituicoes[instituicao].turmas.forEach(turma => {
+                const option = document.createElement("option");
+                option.value = turma;
+                option.textContent = turma;
+                turmasSelect.appendChild(option);
+            });
+
+            document.getElementById('turmas').style.display = "block";
+        }
+
+        function mostrarProjeto() {
+            document.getElementById('projetoContent').style.display = "block";
+        }
+    </script>
 
 </body>
 
