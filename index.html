@@ -106,6 +106,14 @@
       border: 1px solid #00ffcc;
       color: #00ffcc;
     }
+
+    .turma-paragrafo {
+      display: none;
+    }
+
+    .turma-paragrafo.active {
+      display: block;
+    }
   </style>
 </head>
 
@@ -122,74 +130,143 @@
   </nav>
 
   <div class="content">
-    <section>
-      <h2>Projetos por Turma</h2>
-
-      <label for="instituicao">Selecione a instituição:</label>
-      <select id="instituicao" onchange="atualizarTurmas()">
-        <option value="">-- Escolha --</option>
-        <option value="CLIP">Colégio CLIP</option>
-        <option value="Continental">Colégio Continental</option>
-        <option value="Alfredo">Colégio Alfredo Castro</option>
-        <option value="Happy">Happy</option>
-      </select>
-
-      <label for="turma">Selecione a turma ou curso:</label>
-      <select id="turma" onchange="mostrarProjeto()">
+    <!-- CLIP -->
+    <section id="clip">
+      <h2>Projetos CLIP</h2>
+      <label for="instituicao">Selecione a turma:</label>
+      <select id="clipTurma" onchange="mostrarProjeto('clip')">
         <option value="">-- Escolha a turma --</option>
+        <option value="6° ano">6° ano</option>
+        <option value="7° ano">7° ano</option>
+        <option value="8° ano">8° ano</option>
+        <option value="9° ano">9° ano</option>
       </select>
 
-      <div id="projetoContent" class="card">
-        <h3>Informações do Projeto</h3>
-        <!-- Parágrafo personalizado -->
-        <div id="paragrafo-projeto" class="paragrafo-projeto">
-          Este é o parágrafo personalizado para o projeto selecionado. Modifique o conteúdo diretamente no código.
+      <div id="clipProjetoContent" class="card">
+        <h3>Informações do Projeto CLIP</h3>
+
+        <!-- Parágrafos para cada turma do CLIP -->
+        <div id="clipParagrafo6" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 6° ano da instituição CLIP.
+        </div>
+        <div id="clipParagrafo7" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 7° ano da instituição CLIP.
+        </div>
+        <div id="clipParagrafo8" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 8° ano da instituição CLIP.
+        </div>
+        <div id="clipParagrafo9" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 9° ano da instituição CLIP.
         </div>
       </div>
     </section>
+
+    <!-- Continental -->
+    <section id="continental">
+      <h2>Projetos Continental</h2>
+      <label for="instituicao">Selecione a turma:</label>
+      <select id="continentalTurma" onchange="mostrarProjeto('continental')">
+        <option value="">-- Escolha a turma --</option>
+        <option value="Pré I">Pré I</option>
+        <option value="1° ano">1° ano</option>
+        <option value="2° ano">2° ano</option>
+        <option value="3° ano">3° ano</option>
+        <option value="4° ano">4° ano</option>
+        <option value="5° ano">5° ano</option>
+      </select>
+
+      <div id="continentalProjetoContent" class="card">
+        <h3>Informações do Projeto Continental</h3>
+
+        <!-- Parágrafos para cada turma do Continental -->
+        <div id="continentalParagrafoPreI" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma Pré I da instituição Continental.
+        </div>
+        <div id="continentalParagrafo1" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 1° ano da instituição Continental.
+        </div>
+        <div id="continentalParagrafo2" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 2° ano da instituição Continental.
+        </div>
+        <div id="continentalParagrafo3" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 3° ano da instituição Continental.
+        </div>
+        <div id="continentalParagrafo4" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 4° ano da instituição Continental.
+        </div>
+        <div id="continentalParagrafo5" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 5° ano da instituição Continental.
+        </div>
+      </div>
+    </section>
+
+    <!-- Alfredo -->
+    <section id="alfredo">
+      <h2>Projetos Alfredo</h2>
+      <label for="instituicao">Selecione a turma:</label>
+      <select id="alfredoTurma" onchange="mostrarProjeto('alfredo')">
+        <option value="">-- Escolha a turma --</option>
+        <option value="1° ano">1° ano</option>
+        <option value="2° ano">2° ano</option>
+        <option value="3° ano">3° ano</option>
+      </select>
+
+      <div id="alfredoProjetoContent" class="card">
+        <h3>Informações do Projeto Alfredo</h3>
+
+        <!-- Parágrafos para cada turma do Alfredo -->
+        <div id="alfredoParagrafo1" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 1° ano da instituição Alfredo.
+        </div>
+        <div id="alfredoParagrafo2" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 2° ano da instituição Alfredo.
+        </div>
+        <div id="alfredoParagrafo3" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 3° ano da instituição Alfredo.
+        </div>
+      </div>
+    </section>
+
+    <!-- Happy -->
+    <section id="happy">
+      <h2>Projetos Happy</h2>
+      <label for="instituicao">Selecione a turma:</label>
+      <select id="happyTurma" onchange="mostrarProjeto('happy')">
+        <option value="">-- Escolha a turma --</option>
+        <option value="Arduino">Arduino</option>
+        <option value="Microbit">Microbit</option>
+        <option value="Games JR.">Games JR.</option>
+      </select>
+
+      <div id="happyProjetoContent" class="card">
+        <h3>Informações do Projeto Happy</h3>
+
+        <!-- Parágrafos para cada turma do Happy -->
+        <div id="happyParagrafoArduino" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma Arduino da instituição Happy.
+        </div>
+        <div id="happyParagrafoMicrobit" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma Microbit da instituição Happy.
+        </div>
+        <div id="happyParagrafoGamesJR" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma Games JR. da instituição Happy.
+        </div>
+      </div>
+    </section>
+
   </div>
 
   <script>
-    const turmasPorInstituicao = {
-      'CLIP': ['6° ano', '7° ano', '8° ano', '9° ano'],
-      'Continental': ['Pré I', 'Pré II', '1° ano', '2° ano', '3° ano', '4° ano', '5° ano', '6° ano', '7° ano', '8° ano', '9° ano'],
-      'Alfredo': ['1° ano', '2° ano', '3° ano', '4° ano', '5° ano', '6° ano', '7° ano', '8° ano', '9° ano'],
-      'Happy': ['Arduino', 'Microbit', 'Games JR.', 'Games 2D', 'Games 3D', 'Apps com Python', 'Cientistas Digitais']
-    };
+    function mostrarProjeto(instituicao) {
+      const turma = document.getElementById(`${instituicao}Turma`).value;
+      const paragrafoElements = document.querySelectorAll(`#${instituicao}ProjetoContent .turma-paragrafo`);
+      paragrafoElements.forEach(paragrafo => paragrafo.classList.remove('active'));
 
-    function atualizarTurmas() {
-      const instituicao = document.getElementById("instituicao").value;
-      const turmaSelect = document.getElementById("turma");
-      turmaSelect.innerHTML = '<option value="">-- Escolha a turma --</option>';
-
-      if (instituicao && turmasPorInstituicao[instituicao]) {
-        turmasPorInstituicao[instituicao].forEach(turma => {
-          const option = document.createElement("option");
-          option.value = turma;
-          option.textContent = turma;
-          turmaSelect.appendChild(option);
-        });
-      }
-    }
-
-    function mostrarProjeto() {
-      const instituicao = document.getElementById("instituicao").value;
-      const turma = document.getElementById("turma").value;
-
-      if (instituicao && turma) {
-        const chave = `${instituicao}_${turma}`;
-        // Aqui você pode customizar o conteúdo do parágrafo de acordo com a instituição e turma
-        let paragrafo = "Este é o parágrafo personalizado para o projeto selecionado. Modifique o conteúdo diretamente no código.";
-
-        // Personalizando o conteúdo para a turma selecionada
-        if (instituicao === 'CLIP' && turma === '6° ano') {
-          paragrafo = "Projeto para o 6° ano do Colégio CLIP.";
-        } else if (instituicao === 'Continental' && turma === 'Pré I') {
-          paragrafo = "Projeto para a turma Pré I do Colégio Continental.";
+      if (turma) {
+        const turmaParagrafo = document.getElementById(`${instituicao}Paragrafo${turma.replace(/\s/g, '')}`);
+        if (turmaParagrafo) {
+          turmaParagrafo.classList.add('active');
         }
-
-        document.getElementById("paragrafo-projeto").innerText = paragrafo;
-        document.getElementById("projetoContent").style.display = "block";
       }
     }
   </script>
