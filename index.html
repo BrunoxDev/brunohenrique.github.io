@@ -180,7 +180,7 @@
 
         <div id="projetoContent" class="card">
           <h3>Informações do Projeto</h3>
-          <div id="paragrafo-projeto">Este é o parágrafo personalizado para o projeto selecionado.</div>
+          <div id="paragrafo-projeto"></div>
         </div>
       </section>
     </div>
@@ -231,17 +231,29 @@
           "Anotações": "Este ano tem foco na introdução às noções básicas de informática."
         }
       },
+      'Alfredo': {}, // Adicionei objetos vazios para as outras instituições
+      'Happy': {}
     };
 
     function login() {
-      // Aqui você pode colocar a lógica de login real.
-      document.getElementById('loginForm').style.display = 'none';
-      document.getElementById('contentArea').style.display = 'block';
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      // Validação básica - em um sistema real, isso seria mais complexo
+      if (username && password) {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('contentArea').style.display = 'block';
+      } else {
+        alert('Por favor, preencha usuário e senha!');
+      }
     }
 
     function logout() {
       document.getElementById('loginForm').style.display = 'block';
       document.getElementById('contentArea').style.display = 'none';
+      // Limpa os campos de login
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
     }
 
     function atualizarTurmas() {
@@ -250,7 +262,7 @@
 
       turmaSelect.innerHTML = '<option value="">-- Escolha a turma --</option>';
 
-      if (instituicao) {
+      if (instituicao && turmasPorInstituicao[instituicao]) {
         const turmas = Object.keys(turmasPorInstituicao[instituicao]);
 
         turmas.forEach(turma => {
@@ -265,12 +277,24 @@
     function mostrarProjeto() {
       const instituicao = document.getElementById("instituicao").value;
       const turma = document.getElementById("turma").value;
-
       const projetoContent = document.getElementById("projetoContent");
       const paragrafoProjeto = document.getElementById("paragrafo-projeto");
 
-      if (instituicao && turma) {
-        paragrafoProjeto.textContent = turmasPorInstituicao[instituicao][turma];
+      if (instituicao && turma && turmasPorInstituicao[instituicao] && turmasPorInstituicao[instituicao][turma]) {
+        const conteudoTurma = turmasPorInstituicao[instituicao][turma];
+        
+        // Verifica se o conteúdo é um objeto (como no caso do Continental)
+        if (typeof conteudoTurma === 'object' && conteudoTurma !== null) {
+          let html = '';
+          for (const [key, value] of Object.entries(conteudoTurma)) {
+            html += `<p><strong>${key}:</strong> ${value}</p>`;
+          }
+          paragrafoProjeto.innerHTML = html;
+        } else {
+          // Se for string (como no CLIP)
+          paragrafoProjeto.textContent = conteudoTurma;
+        }
+        
         projetoContent.style.display = "block";
       } else {
         projetoContent.style.display = "none";
