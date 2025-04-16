@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Geek do Professor Bruno</title>
+  <title>Portal de Aulas do Professor Bruno</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -119,7 +119,7 @@
 
 <body>
   <header>
-    <h1>Portal Geek do Professor Bruno</h1>
+    <h1>Portal de Aulas do Professor Bruno HSM</h1>
   </header>
 
   <nav>
@@ -146,16 +146,16 @@
         <h3>Informações do Projeto CLIP</h3>
 
         <!-- Parágrafos para cada turma do CLIP -->
-        <div id="clipParagrafo6" class="turma-paragrafo">
+        <div id="clipParagrafo6ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 6° ano da instituição CLIP.
         </div>
-        <div id="clipParagrafo7" class="turma-paragrafo">
+        <div id="clipParagrafo7ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 7° ano da instituição CLIP.
         </div>
-        <div id="clipParagrafo8" class="turma-paragrafo">
+        <div id="clipParagrafo8ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 8° ano da instituição CLIP.
         </div>
-        <div id="clipParagrafo9" class="turma-paragrafo">
+        <div id="clipParagrafo9ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 9° ano da instituição CLIP.
         </div>
       </div>
@@ -182,19 +182,19 @@
         <div id="continentalParagrafoPreI" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma Pré I da instituição Continental.
         </div>
-        <div id="continentalParagrafo1" class="turma-paragrafo">
+        <div id="continentalParagrafo1ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 1° ano da instituição Continental.
         </div>
-        <div id="continentalParagrafo2" class="turma-paragrafo">
+        <div id="continentalParagrafo2ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 2° ano da instituição Continental.
         </div>
-        <div id="continentalParagrafo3" class="turma-paragrafo">
+        <div id="continentalParagrafo3ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 3° ano da instituição Continental.
         </div>
-        <div id="continentalParagrafo4" class="turma-paragrafo">
+        <div id="continentalParagrafo4ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 4° ano da instituição Continental.
         </div>
-        <div id="continentalParagrafo5" class="turma-paragrafo">
+        <div id="continentalParagrafo5ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 5° ano da instituição Continental.
         </div>
       </div>
@@ -215,13 +215,13 @@
         <h3>Informações do Projeto Alfredo</h3>
 
         <!-- Parágrafos para cada turma do Alfredo -->
-        <div id="alfredoParagrafo1" class="turma-paragrafo">
+        <div id="alfredoParagrafo1ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 1° ano da instituição Alfredo.
         </div>
-        <div id="alfredoParagrafo2" class="turma-paragrafo">
+        <div id="alfredoParagrafo2ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 2° ano da instituição Alfredo.
         </div>
-        <div id="alfredoParagrafo3" class="turma-paragrafo">
+        <div id="alfredoParagrafo3ano" class="turma-paragrafo">
           Este é o parágrafo personalizado para o projeto da turma 3° ano da instituição Alfredo.
         </div>
       </div>
@@ -233,39 +233,48 @@
       <label for="instituicao">Selecione a turma:</label>
       <select id="happyTurma" onchange="mostrarProjeto('happy')">
         <option value="">-- Escolha a turma --</option>
-        <option value="Arduino">Arduino</option>
-        <option value="Microbit">Microbit</option>
-        <option value="Games JR.">Games JR.</option>
+        <option value="1° ano">1° ano</option>
+        <option value="2° ano">2° ano</option>
+        <option value="3° ano">3° ano</option>
+        <option value="4° ano">4° ano</option>
       </select>
 
       <div id="happyProjetoContent" class="card">
         <h3>Informações do Projeto Happy</h3>
 
         <!-- Parágrafos para cada turma do Happy -->
-        <div id="happyParagrafoArduino" class="turma-paragrafo">
-          Este é o parágrafo personalizado para o projeto da turma Arduino da instituição Happy.
+        <div id="happyParagrafo1ano" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 1° ano da instituição Happy.
         </div>
-        <div id="happyParagrafoMicrobit" class="turma-paragrafo">
-          Este é o parágrafo personalizado para o projeto da turma Microbit da instituição Happy.
+        <div id="happyParagrafo2ano" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 2° ano da instituição Happy.
         </div>
-        <div id="happyParagrafoGamesJR" class="turma-paragrafo">
-          Este é o parágrafo personalizado para o projeto da turma Games JR. da instituição Happy.
+        <div id="happyParagrafo3ano" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 3° ano da instituição Happy.
+        </div>
+        <div id="happyParagrafo4ano" class="turma-paragrafo">
+          Este é o parágrafo personalizado para o projeto da turma 4° ano da instituição Happy.
         </div>
       </div>
     </section>
-
   </div>
 
   <script>
     function mostrarProjeto(instituicao) {
-      const turma = document.getElementById(`${instituicao}Turma`).value;
-      const paragrafoElements = document.querySelectorAll(`#${instituicao}ProjetoContent .turma-paragrafo`);
-      paragrafoElements.forEach(paragrafo => paragrafo.classList.remove('active'));
+      const turmaSelecionada = document.getElementById(`${instituicao}Turma`).value;
+      const turmas = document.querySelectorAll(`#${instituicao}ProjetoContent .turma-paragrafo`);
 
-      if (turma) {
-        const turmaParagrafo = document.getElementById(`${instituicao}Paragrafo${turma.replace(/\s/g, '')}`);
-        if (turmaParagrafo) {
-          turmaParagrafo.classList.add('active');
+      // Esconde todos os parágrafos
+      turmas.forEach(turma => {
+        turma.classList.remove("active");
+      });
+
+      // Se houver uma turma selecionada, exibe o parágrafo correspondente
+      if (turmaSelecionada) {
+        const paragrafoId = `${instituicao}Paragrafo${turmaSelecionada.replace(/\s/g, '').replace(/°/g, '')}`;
+        const paragrafo = document.getElementById(paragrafoId);
+        if (paragrafo) {
+          paragrafo.classList.add("active");
         }
       }
     }
